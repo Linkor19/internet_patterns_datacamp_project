@@ -1,0 +1,167 @@
+-- UPDATE patterns
+-- SET "2000" = NULL
+-- WHERE "2000" = 'NaN';
+--
+-- UPDATE patterns
+-- SET "2001" = NULL
+-- WHERE "2001" = 'NaN';
+--
+-- UPDATE patterns
+-- SET "2002" = NULL
+-- WHERE "2002" = 'NaN';
+--
+-- UPDATE patterns
+-- SET "2003" = NULL
+-- WHERE "2003" = 'NaN';
+--
+-- UPDATE patterns
+-- SET "2004" = NULL
+-- WHERE "2004" = 'NaN';
+--
+-- UPDATE patterns
+-- SET "2005" = NULL
+-- WHERE "2005" = 'NaN';
+--
+-- UPDATE patterns
+-- SET "2006" = NULL
+-- WHERE "2006" = 'NaN';
+--
+-- UPDATE patterns
+-- SET "2007" = NULL
+-- WHERE "2007" = 'NaN';
+--
+-- UPDATE patterns
+-- SET "2008" = NULL
+-- WHERE "2008" = 'NaN';
+--
+-- UPDATE patterns
+-- SET "2009" = NULL
+-- WHERE "2009" = 'NaN';
+--
+-- UPDATE patterns
+-- SET "2010" = NULL
+-- WHERE "2010" = 'NaN';
+--
+-- UPDATE patterns
+-- SET "2011" = NULL
+-- WHERE "2011" = 'NaN';
+--
+-- UPDATE patterns
+-- SET "2012" = NULL
+-- WHERE "2013" = 'NaN';
+--
+-- UPDATE patterns
+-- SET "2014" = NULL
+-- WHERE "2014" = 'NaN';
+--
+-- UPDATE patterns
+-- SET "2015" = NULL
+-- WHERE "2015" = 'NaN';
+--
+-- UPDATE patterns
+-- SET "2016" = NULL
+-- WHERE "2016" = 'NaN';
+--
+-- UPDATE patterns
+-- SET "2017" = NULL
+-- WHERE "2017" = 'NaN';
+--
+-- UPDATE patterns
+-- SET "2018" = NULL
+-- WHERE "2018" = 'NaN';
+--
+-- UPDATE patterns
+-- SET "2019" = NULL
+-- WHERE "2019" = 'NaN';
+--
+-- UPDATE patterns
+-- SET "2020" = NULL
+-- WHERE "2020" = 'NaN';
+--
+-- UPDATE patterns
+-- SET "2021" = NULL
+-- WHERE "2021" = 'NaN';
+--
+-- UPDATE patterns
+-- SET "2022" = NULL
+-- WHERE "2022" = 'NaN';
+--
+-- UPDATE patterns
+-- SET "2023" = NULL
+-- WHERE "2023" = 'NaN';
+
+-- ALTER TABLE patterns
+-- ALTER COLUMN "2000"
+-- TYPE FLOAT;
+
+-- ALTER TABLE patterns
+-- ALTER COLUMN "2001" TYPE FLOAT;
+--
+-- ALTER TABLE patterns
+-- ALTER COLUMN "2002" TYPE FLOAT;
+--
+-- ALTER TABLE patterns
+-- ALTER COLUMN "2003" TYPE FLOAT;
+--
+-- ALTER TABLE patterns
+-- ALTER COLUMN "2004" TYPE FLOAT;
+--
+-- ALTER TABLE patterns
+-- ALTER COLUMN "2005" TYPE FLOAT;
+--
+-- ALTER TABLE patterns
+-- ALTER COLUMN "2006" TYPE FLOAT;
+--
+-- ALTER TABLE patterns
+-- ALTER COLUMN "2007" TYPE FLOAT;
+--
+-- ALTER TABLE patterns
+-- ALTER COLUMN "2008" TYPE FLOAT;
+--
+-- ALTER TABLE patterns
+-- ALTER COLUMN "2009" TYPE FLOAT;
+--
+-- ALTER TABLE patterns
+-- ALTER COLUMN "2010" TYPE FLOAT;
+--
+-- ALTER TABLE patterns
+-- ALTER COLUMN "2011" TYPE FLOAT;
+--
+-- ALTER TABLE patterns
+-- ALTER COLUMN "2012" TYPE FLOAT;
+--
+-- ALTER TABLE patterns
+-- ALTER COLUMN "2013" TYPE FLOAT;
+--
+-- ALTER TABLE patterns
+-- ALTER COLUMN "2014" TYPE FLOAT;
+--
+-- ALTER TABLE patterns
+-- ALTER COLUMN "2015" TYPE FLOAT;
+--
+-- ALTER TABLE patterns
+-- ALTER COLUMN "2016" TYPE FLOAT;
+--
+-- ALTER TABLE patterns
+-- ALTER COLUMN "2017" TYPE FLOAT;
+--
+-- ALTER TABLE patterns
+-- ALTER COLUMN "2018" TYPE FLOAT;
+--
+-- ALTER TABLE patterns
+-- ALTER COLUMN "2019" TYPE FLOAT;
+--
+-- ALTER TABLE patterns
+-- ALTER COLUMN "2020" TYPE FLOAT;
+--
+-- ALTER TABLE patterns
+-- ALTER COLUMN "2021" TYPE FLOAT;
+--
+-- ALTER TABLE patterns
+-- ALTER COLUMN "2022" TYPE FLOAT;
+--
+-- ALTER TABLE patterns
+-- ALTER COLUMN "2023" TYPE FLOAT;
+
+----------------------------------------- add useful tables
+
