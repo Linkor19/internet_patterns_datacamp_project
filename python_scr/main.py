@@ -1,4 +1,7 @@
 from itertools import groupby
+from scipy import stats
+import math
+import sys
 
 import pandas as pd
 import numpy as np
@@ -253,17 +256,123 @@ edu_stat_2015 = edu_stat[edu_stat['year'] == 2015]
 
 corr_gdp_2020 = patterns_melted_2020_df.merge(gdp_stat_2020, how = 'left', on = 'Country Name')
 corr_gdp_2020.plot(kind = 'scatter', x = 'GDP (current US$)', y = 'value')
-plt.show()
+# plt.show()
 corr_gdp_2020.plot(kind = 'scatter', x = 'Life expectancy at birth, total (years)', y = 'value')
-plt.show()
+# plt.show()
+corr_gdp_coeff = corr_gdp_2020[['value', 'GDP (current US$)', 'Life expectancy at birth, total (years)']]
+corr_gdp_coeff = corr_gdp_coeff.corr(min_periods=3)
+# print(corr_gdp_coeff)
 
 corr_edu_2015 = patterns_melted_2015_df.merge(edu_stat_2015, how = 'left', on = 'Country Name')
 corr_edu_2015.plot(kind = 'scatter', x = 'Government expenditure on education as % of GDP (%)', y = 'value')
-plt.show()
+# plt.show()
 corr_edu_2015.plot(kind = 'scatter', x = 'Adult literacy rate, population 15+ years, both sexes (%)', y = 'value')
-plt.show()
+# plt.show()
 corr_edu_2015.plot(kind = 'scatter', x = 'Youth literacy rate, population 15-24 years, both sexes (%)', y = 'value')
-plt.show()
+# plt.show()
+corr_edu_coeff = corr_edu_2015[['value','Government expenditure on education as % of GDP (%)','Adult literacy rate, population 15+ years, both sexes (%)','Youth literacy rate, population 15-24 years, both sexes (%)']]
+corr_edu_coeff = corr_edu_coeff.corr(min_periods=3)
+# print(corr_edu_coeff)
 
 patterns_melted_2023_df.plot(kind = 'scatter', x = 'Broadband Internet Speed 2023', y = 'value')
-plt.show()
+# plt.show()
+corr_speed_coeff = patterns_melted_2023_df[['value','Broadband Internet Speed 2023']]
+corr_speed_coeff = corr_speed_coeff.corr(min_periods=3)
+# print(corr_speed_coeff)
+
+
+#regresion analysis
+
+reggression_table = patterns_melted_df[['Country Name', 'year', 'value']].copy()
+reggression_table = reggression_table[reggression_table['Country Name'].isin(['Zimbabwe', 'Zambia'])]
+reggression_table = reggression_table.dropna()
+reggression_table['year'] = reggression_table['year'].astype(int)
+reggression_table['1/x'] = 1 / reggression_table['year']
+reggression_table['1/y'] = 1 / reggression_table['value']
+reggression_table['ln(X)'] = np.log(reggression_table['year'])
+reggression_table['ln(Y)'] = np.log(reggression_table['value'])
+
+reggression_table['predicted_value'] = np.nan
+
+alredy_noticed_counrtries = []
+list_of_dataframes = []
+
+def create_unique_dataframes(row):
+    country_name = row['Country Name']
+    if country_name in alredy_noticed_counrtries:
+        return
+    else:
+        list_of_dataframes.append(f'regression_table_{country_name}')
+        globals()[f'regression_table_{country_name}'] = reggression_table[
+            reggression_table['Country Name'] == country_name]
+        alredy_noticed_counrtries.append(country_name)
+        return
+
+reggression_table.apply(create_unique_dataframes, axis=1)
+
+for name in list_of_dataframes:
+    current_df = globals()[name]
+
+    if len(current_df) < 2:
+        continue
+    slope_1, intercept_1, _, _, _ = stats.linregress(current_df['year'], current_df['value'])
+    slope_2, intercept_2, _, _, _ = stats.linregress(current_df['ln(X)'], current_df['value'])
+    slope_3, intercept_3, _, _, _ = stats.linregress(current_df['1/x'], current_df['value'])
+    slope_4, intercept_4, _, _, _ = stats.linregress(current_df['year'], current_df['ln(Y)'])
+    slope_5, intercept_5, _, _, _ = stats.linregress(current_df['ln(X)'], current_df['ln(Y)'])
+    slope_6, intercept_6, _, _, _ = stats.linregress(current_df['1/x'], current_df['ln(Y)'])
+    slope_7, intercept_7, _, _, _ = stats.linregress(current_df['year'], current_df['1/y'])
+    slope_8, intercept_8, _, _, _ = stats.linregress(current_df['ln(X)'], current_df['1/y'])
+    slope_9, intercept_9, _, _, _ = stats.linregress(current_df['1/x'], current_df['1/y'])
+
+    model_sq = {i: [] for i in range(1, 10)}
+
+    for idx, row in current_df.iterrows():
+        x = row['year']
+        y = row['value']
+        ln_x = row['ln(X)']
+        inv_x = row['1/x']
+
+        model_sq[1].append((y - (intercept_1 + slope_1 * x)) ** 2)
+        model_sq[2].append((y - (intercept_2 + slope_2 * ln_x)) ** 2)
+        model_sq[3].append((y - (intercept_3 + slope_3 * inv_x)) ** 2)
+        model_sq[4].append((y - np.exp(intercept_4 + slope_4 * x)) ** 2)
+        model_sq[5].append((y - np.exp(intercept_5 + slope_5 * ln_x)) ** 2)
+        model_sq[6].append((y - np.exp(intercept_6 + slope_6 * inv_x)) ** 2)
+        model_sq[7].append((y - (1 / (intercept_7 + slope_7 * x))) ** 2)
+        model_sq[8].append((y - (1 / (intercept_8 + slope_8 * ln_x))) ** 2)
+        model_sq[9].append((y - (1 / (intercept_9 + slope_9 * inv_x))) ** 2)
+
+    errors = [sum(model_sq[i]) for i in range(1, 10)]
+
+    best_error = min(errors)
+    best_model_idx = errors.index(best_error) + 1
+
+    globals()[f'best_model_{name}'] = errors
+    globals()[f'best_model_value_{name}'] = best_error
+    globals()[f'best_model_type_{name}'] = best_model_idx
+
+    predictions = []
+
+    if best_model_idx == 1:
+        predictions = intercept_1 + slope_1 * current_df['year']
+    elif best_model_idx == 2:
+        predictions = intercept_2 + slope_2 * current_df['ln(X)']
+    elif best_model_idx == 3:
+        predictions = intercept_3 + slope_3 * current_df['1/x']
+    elif best_model_idx == 4:
+        predictions = np.exp(intercept_4 + slope_4 * current_df['year'])
+    elif best_model_idx == 5:
+        predictions = np.exp(intercept_5 + slope_5 * current_df['ln(X)'])
+    elif best_model_idx == 6:
+        predictions = np.exp(intercept_6 + slope_6 * current_df['1/x'])
+    elif best_model_idx == 7:
+        predictions = 1 / (intercept_7 + slope_7 * current_df['year'])
+    elif best_model_idx == 8:
+        predictions = 1 / (intercept_8 + slope_8 * current_df['ln(X)'])
+    elif best_model_idx == 9:
+        predictions = 1 / (intercept_9 + slope_9 * current_df['1/x'])
+
+    reggression_table.loc[current_df.index, 'predicted_value'] = predictions
+
+print(reggression_table)
